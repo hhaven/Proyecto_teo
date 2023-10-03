@@ -1,4 +1,20 @@
+#include <stdio.h>
+
 int main() {
-   printf();
-   return 0;
+    int a = 5;
+    int b = 10;
+    int result = a + b;
+
+    if (result > 10) {
+        printf("El resultado es mayor que 10.\n");
+    } else {
+        printf("El resultado no es mayor que 10.\n");
+    }
+
+    while (a > 0) {
+        printf("El valor de a es %d\n", a);
+        a--;
+    }
+
+    return 0;
 }
