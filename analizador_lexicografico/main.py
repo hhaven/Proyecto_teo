@@ -2,11 +2,12 @@ import re
 
 # Expresiones
 token_patterns = [
+    (r'\/\*[\s\S]*?\*\/', 'COMMENT_MULTILINE'),  # Token para comentarios multilínea "/* ... */"
+    (r'\/\/[^\n]*', 'COMMENT_LINE'),  # Token para comentarios de línea "// ..."
     (r'if', 'IF'),  # Token para la palabra clave "if"
     (r'else', 'ELSE'),  # Token para la palabra clave "else"
     (r'while', 'WHILE'),  # Token para la palabra clave "while"
     (r'int|float|char|void', 'TYPE'),  # Token para tipos de datos (int, float, char, void)
-    (r'[a-zA-Z_][a-zA-Z0-9_]*', 'ID'),  # Token para identificadores
     (r'\d+', 'NUM'),  # Token para números enteros
     (r'\d+\.\d+', 'FLOAT'),  # Token para números flotantes
     (r'\+', 'PLUS'),  # Token para el operador de suma "+"
@@ -20,14 +21,13 @@ token_patterns = [
     (r';', 'SEMICOLON'),  # Token para el punto y coma ";"
     (r',', 'COMMA'),  # Token para la coma ","
     (r'"[^"]*"', 'STRING'), # Token para cadenas de caracteres
-    (r'\/\/[^\n]*', 'COMMENT'),  # Token para comentarios de línea "// ..."
     (r'=', 'ASSIGN'),      # Token para  "="
     (r'\+=', 'ADD_ASSIGN'), # Token para  "+="
     (r'-=', 'SUB_ASSIGN'), # Token para  "-="
     (r'>', 'GREATER_ASSIGN'), # Token para  "-="
     (r'<', 'LESSER_ASSIGN'), # Token para  "-="
-    (r'\/\*[\s\S]*?\*\/', 'MULTI_COMMENT'),  # Token para comentarios multilínea "/* ... */"
     (r'#include\s*<.*?>', 'INCLUDE'), # Token para include
+    (r'[a-zA-Z_][a-zA-Z0-9_]*', 'ID'),  # Token para identificadores
 ]
 # Expresión regular para ignorar espacios en blanco y saltos de línea
 ignore_pattern = r'[ \t\n]+'
@@ -82,34 +82,36 @@ symbol_table = SymbolTable()
 
 # Función para tokenizar y agregar a la tabla de símbolos
 def tokenize_and_add_to_symbol_table(source_code, line_number):
+
     tokens = []
     source_code = source_code.strip()
     in_string = False
 
-    while source_code:
-        for pattern, token_type in token_patterns:
-            match = re.match(pattern, source_code)
-            if match:
-                value = match.group(0)
-                if token_type != 'IGNORE':
-                    tokens.append((token_type, value))
-                    if token_type == 'ID':
-                        symbol_table.insert(value, token_type)
-                    elif token_type == 'NUM':
-                        symbol_table.insert(value, token_type, int(value))
-                    elif token_type == 'FLOAT':
-                        symbol_table.insert(value, token_type, float(value))
-                    elif token_type == 'STRING':
-                        if in_string:
-                            tokens.pop()  # Eliminar el último token (comilla de cierre)
-                            value = tokens[-1][1] + value  # Concatenar la cadena
-                            tokens[-1] = ('STRING', value)
-                        else:
-                            in_string = True
-                source_code = source_code[len(value):].strip()
-                break
-        else:
-            raise SyntaxError(f"Token no válido en: {source_code}")
+    if source_code:
+        while source_code:
+            for pattern, token_type in token_patterns:
+                match = re.match(pattern, source_code)
+                if match:
+                    value = match.group(0)
+                    if token_type != 'IGNORE':
+                        tokens.append((token_type, value))
+                        if token_type == 'ID':
+                            symbol_table.insert(value, token_type)
+                        elif token_type == 'NUM':
+                            symbol_table.insert(value, token_type, int(value))
+                        elif token_type == 'FLOAT':
+                            symbol_table.insert(value, token_type, float(value))
+                        elif token_type == 'STRING':
+                            if in_string:
+                                tokens.pop()  # Eliminar el último token (comilla de cierre)
+                                value = tokens[-1][1] + value  # Concatenar la cadena
+                                tokens[-1] = ('STRING', value)
+                            else:
+                                in_string = True
+                    source_code = source_code[len(value):].strip()
+                    break
+            else:
+                raise SyntaxError(f"Token no válido en: {source_code}")
     print (f"\n-------------------------------------------------")
     print(f"Linea #{line_number}")
     print(f"Cddigo: {line}")

@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+/*comentario*/
 int main() {
     int a = 5;
     int b = 10;
@@ -12,7 +12,7 @@ int main() {
     }
 
     while (a > 0) {
-        printf("El valor de a es %d\n", a);
+        printff("El valor de a es %d\n", a);
         a--;
     }
 
