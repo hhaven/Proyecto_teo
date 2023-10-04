@@ -8,8 +8,8 @@ token_patterns = [
     (r'else', 'ELSE'),  # Token para la palabra clave "else"
     (r'while', 'WHILE'),  # Token para la palabra clave "while"
     (r'int|float|char|void', 'TYPE'),  # Token para tipos de datos (int, float, char, void)
-    (r'\d+', 'NUM'),  # Token para números enteros
     (r'\d+\.\d+', 'FLOAT'),  # Token para números flotantes
+    (r'\d+', 'NUM'),  # Token para números enteros
     (r'\+', 'PLUS'),  # Token para el operador de suma "+"
     (r'-', 'MINUS'),  # Token para el operador de resta "-"
     (r'\*', 'TIMES'),  # Token para el operador de multiplicación "*"
@@ -31,32 +31,6 @@ token_patterns = [
 ]
 # Expresión regular para ignorar espacios en blanco y saltos de línea
 ignore_pattern = r'[ \t\n]+'
-
-# Función para tokenizar el contenido de un archivo
-def tokenize_file(file_path):
-    with open(file_path, 'r') as file:
-        source_code = file.read()
-        tokens = tokenize(source_code)
-    return tokens
-
-# Función para tokenizar el código fuente
-def tokenize(source_code):
-    tokens = []
-    source_code = source_code.strip()
-    
-    while source_code:
-        for pattern, token_type in token_patterns:
-            match = re.match(pattern, source_code)
-            if match:
-                value = match.group(0)
-                if token_type != 'IGNORE':
-                    tokens.append((token_type, value))
-                source_code = source_code[len(value):].strip()
-                break
-        else:
-            raise SyntaxError(f"Token no válido en: {source_code}")
-    
-    return tokens
 
 # Leer codigo
 class SymbolTable:
@@ -134,11 +108,7 @@ if __name__ == "__main__":
                 source_code = line
                 tokenize_and_add_to_symbol_table(source_code, line_number)
                 line_number += 1
-            
-        # Imprimir la tabla de símbolos
-        #print("\nTabla de Símbolos:")
-        #for name, info in symbol_table.table.items():
-        #    print(f"Nombre: {name}, Tipo: {info['type']}, Valor: {info['value']}")
+                
         print (f"\n-------------------------------------------------")    
     except FileNotFoundError:
         print(f"El archivo '{file_path}' no se encontró.")
