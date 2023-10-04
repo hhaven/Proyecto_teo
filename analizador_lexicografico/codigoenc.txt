@@ -1,20 +1,13 @@
-#include <stdio.h>
-/*comentario*/
-int main() {
-    int a = 5;
-    int b = 10;
-    int result = a + b;
-
-    if (result > 10) {
-        printf("El resultado es mayor que 10.\n");
-    } else {
-        printf("El resultado no es mayor que 10.\n");
-    }
-
-    while (a > 0) {
-        printff("El valor de a es %d\n", a);
-        a--;
-    }
-
-    return 0;
-}
+#include <stdio.h>      
+#include <conio.h>  
+#include <stdlib.h>  
+void main()  
+{     
+    // use rand() function to generate the number  
+    printf (" The random number is: %d", rand());  
+    printf (3 + 2.21312321312 + 6.022e23);  
+      mandsfmAN,./ASD;
+    printf (" \n The random number is: %d", rand());  
+    printf ("\n The random number is: %d", rand());  
+    getch();  
+}  
