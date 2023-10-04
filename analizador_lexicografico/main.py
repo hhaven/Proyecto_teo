@@ -8,8 +8,9 @@ token_patterns = [
     (r'else', 'ELSE'),  # Token para la palabra clave "else"
     (r'while', 'WHILE'),  # Token para la palabra clave "while"
     (r'int|float|char|void', 'TYPE'),  # Token para tipos de datos (int, float, char, void)
-    (r'\d+\.\d+', 'FLOAT'),  # Token para números flotantes
-    (r'\d+', 'NUM'),  # Token para números enteros
+    (r'\d+\.\d+[eE][+-]?\d+', 'DOUBLE'),  # Token para números de doble precisión en notación científica
+    (r'\d+\.\d+', 'FLOAT'),         # Token para números de punto flotante
+    (r'\d+', 'NUM'),                # Token para números enteros
     (r'\+', 'PLUS'),  # Token para el operador de suma "+"
     (r'-', 'MINUS'),  # Token para el operador de resta "-"
     (r'\*', 'TIMES'),  # Token para el operador de multiplicación "*"
@@ -108,7 +109,7 @@ if __name__ == "__main__":
                 source_code = line
                 tokenize_and_add_to_symbol_table(source_code, line_number)
                 line_number += 1
-                
+
         print (f"\n-------------------------------------------------")    
     except FileNotFoundError:
         print(f"El archivo '{file_path}' no se encontró.")

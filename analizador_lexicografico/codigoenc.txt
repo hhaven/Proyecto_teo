@@ -5,7 +5,7 @@ void main()
 {     
     // use rand() function to generate the number  
     printf (" The random number is: %d", rand());  
-    printf (3.5);  
+    printf (3 + 2.21312321312 + 6.022e23);  
       mandsfmAN,./ASD;
     printf (" \n The random number is: %d", rand());  
     printf ("\n The random number is: %d", rand());  
