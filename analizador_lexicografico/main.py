@@ -7,8 +7,8 @@ token_patterns = [
     (r'if', 'IF'),  # Token para la palabra clave "if"
     (r'else', 'ELSE'),  # Token para la palabra clave "else"
     (r'while', 'WHILE'),  # Token para la palabra clave "while"
-    (r'return', 'RETURN'),  # Token para la palabra clave "while"
-    (r'class', 'CLASS'),  # Token para la palabra clave "while"
+    (r'return', 'RETURN'),  # Token para la palabra clave "return"
+    (r'class', 'CLASS'),  # Token para la palabra clave "class"
     (r'int|float|char|void', 'TYPE'),  # Token para tipos de datos (int, float, char, void)
     (r'\d+\.\d+[eE][+-]?\d+', 'DOUBLE'),  # Token para números de doble precisión en notación científica
     (r'\d+\.\d+', 'FLOAT'),         # Token para números de punto flotante
